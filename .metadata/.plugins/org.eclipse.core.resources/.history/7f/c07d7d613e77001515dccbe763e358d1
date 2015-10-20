@@ -1,0 +1,23 @@
+package com.google.gwt.sample.stockwatcher.database;
+
+public class Filmbase implements IImport, IExport {
+
+	@Override
+	public void exportToXML() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void exportToPNG() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void importFile(String fileLocation) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

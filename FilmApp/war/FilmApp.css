@@ -10,9 +10,28 @@ h1 {
   text-align: center;
 }
 
+/* Add Stock panel */
+.nextButtonPanel {
+  margin: 10px 0px 15px 0px;
+}
+
 .exportButton {
   display: block;
   font-size: 16pt;
+}
+
+/* table header row */
+.tableHeader {
+  background-color: #006600;
+  color: white;
+  font-weight: bold;
+}
+
+/* flex table */
+.table {
+  border: 1px solid silver;
+  padding: 2px;
+  margin-bottom:6px;
 }
 
 /** Set ids using widget.getElement().setId("idOfElement") */

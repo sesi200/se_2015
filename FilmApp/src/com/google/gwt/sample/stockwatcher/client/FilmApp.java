@@ -1,8 +1,10 @@
 package com.google.gwt.sample.stockwatcher.client;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
+
 import java.util.Date;
 import java.util.ArrayList;
+
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Random;
@@ -26,36 +28,40 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class FilmApp implements EntryPoint {
 	
-	private Button exportButton = new Button("Export as XML");
-	private HorizontalPanel exportPanel = new HorizontalPanel();
-	final Database database = new Database();
+	private Table table = new Table();
+	private VerticalPanel mainPanel = new VerticalPanel();
 	
 	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-
-		exportPanel.add(exportButton);
 		
-		// We can add style names to widgets
-		exportButton.addStyleName("exportButton");
-
-		// Add the exportButton to the RootPanel
+		table.createTable();
+			    
+	    // Assemble Main panel.
+	    mainPanel.add(table.getFilmTable());
+	    mainPanel.add(table.getNextButtonPanel());
+	    
 		// Use RootPanel.get() to get the entire body element
-		RootPanel.get("Export").add(exportButton);
-
-		// Create a handler for the exportButton
-		class MyHandler implements ClickHandler{
-			/**
-			 * Fired when the user clicks on the exportButton.
-			 */
-			public void onClick(ClickEvent event) {
-				database.exportXML();
-			}
-		}
-
-		// Add a handler to send the name to the server
-		MyHandler handler = new MyHandler();
-		exportButton.addClickHandler(handler);
+		RootPanel.get("Main").add(mainPanel);
+			    	
 	}
+	
+
+		
+		
+//		// Create a handler for the exportButton
+//		class MyHandler implements ClickHandler{
+//			/**
+//			 * Fired when the user clicks on the exportButton.
+//			 */
+//			public void onClick(ClickEvent event) {
+//				database.exportXML();
+//			}
+//		}
+//
+//		// Add a handler to send the name to the server
+//		MyHandler handler = new MyHandler();
+//		exportButton.addClickHandler(handler);
 }
+

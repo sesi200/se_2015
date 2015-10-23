@@ -5,16 +5,18 @@ import java.util.ArrayList;
 public class Film {
 	
 	private String name;
+	private int year;
 	private float duration;
 	private ArrayList<String> genres;
 	private ArrayList<String> language;
 	private ArrayList<String> countries;
 	
-	public Film(String name, float duration, ArrayList<String> genres, ArrayList<String> language, ArrayList<String> countries) {
+	public Film(String name, int year, float duration, ArrayList<String> language, ArrayList<String> genres, ArrayList<String> countries) {
 		this.name = name;
+		this.year = year;
 		this.duration = duration;
-		this.genres = genres;
 		this.language = language;
+		this.genres = genres;
 		this.countries = countries;
 	}
 	
@@ -23,6 +25,9 @@ public class Film {
 	}
 	public float getDuration() {
 		return duration;
+	}
+	public int getYear() {
+		return year;
 	}
 	public ArrayList<String> getGenres() {
 		return genres;

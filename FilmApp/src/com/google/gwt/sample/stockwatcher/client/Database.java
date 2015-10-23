@@ -7,9 +7,49 @@ public class Database implements IImport, IExport {
 	private ArrayList<Film> storage_array;
 	private String file = new String(); //FileName location must be set!!
 	
+	//Create a test-film1 for testing Export function
+	public Film createFilm1(){
+		ArrayList<String> language = new ArrayList<String>();
+		language.add("German");
+		language.add("English");
+		ArrayList<String> genre = new ArrayList<String>();
+		genre.add("Romance");
+		ArrayList<String> country = new ArrayList<String>();
+		country.add("England");
+		country.add("United States of America");
+		country.add("Switzerland");
+		Film film1 = new Film("film1", 1967, 92.5f, language, genre, country);
+		return film1;
+	}
+	//Create a test-film2 for testing Export function
+	public Film createFilm2(){
+		ArrayList<String> language = new ArrayList<String>();
+		language.add("Spanish");
+		language.add("English");
+		language.add("Swedisch");
+		ArrayList<String> genre = new ArrayList<String>();
+		genre.add("Science Fiction");
+		genre.add("Action");
+		ArrayList<String> country = new ArrayList<String>();
+		country.add("England");
+		country.add("Switzerland");
+		Film film2 = new Film("film2", 2100, 10.5567f, language, genre, country);
+		return film2;
+	}
+	
 	public Database(){
 		storage_array = new ArrayList<Film>();
-		importFile(file);
+		
+		for(int i=0; i<50; i++){
+			storage_array.add(createFilm1());
+			storage_array.add(createFilm2());
+			storage_array.add(createFilm2());
+			storage_array.add(createFilm1());
+			storage_array.add(createFilm2());
+			storage_array.add(createFilm1());
+		}
+	
+		//importFile(file);
 	}
 	
 	@Override
@@ -31,8 +71,11 @@ public class Database implements IImport, IExport {
 	}
 	
 	public void addFilm(Film filmToAdd){
-		// TODO Auto-generated method stub
-		
+		storage_array.add(filmToAdd);	
+	}
+	
+	public Film getFilm(int i){
+		return storage_array.get(i);	
 	}
 	
 	ArrayList<Film> getFilteredData(String filter){

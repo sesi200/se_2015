@@ -1,0 +1,115 @@
+import java.io.*;
+import java.util.regex.*;
+
+public class Import {
+
+    public void importFile() {
+        
+        String fileName = "movies_80000.tsv";
+        String newFileName = "Test.tsv";
+        String line = null;
+        
+        try {
+            FileReader fileReader = new FileReader(fileName);
+            FileWriter fileWriter = new FileWriter(newFileName);
+            
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            
+            while((line = bufferedReader.readLine()) != null) {
+                Pattern pId = Pattern.compile("^[0-9]*\t");
+                Pattern pTitel = Pattern.compile("/m/.*?\t.*?\t\\d");
+                Pattern pDate = Pattern.compile("\t\\d.{3}");
+                Pattern pLength = Pattern.compile("\\d*[.]0");
+                Pattern pLanguage = Pattern.compile(": \"(\\w+) Language\"");
+                Pattern pCountry = Pattern.compile("\\{\".*?: \".*?\"\\}");
+                
+                Matcher mId = pId.matcher(line);
+                Matcher mTitel = pTitel.matcher(line);
+                Matcher mDate = pDate.matcher(line);
+                Matcher mLength = pLength.matcher(line);
+                Matcher mLanguage = pLanguage.matcher(line);
+                Matcher mCountry = pCountry.matcher(line);
+                
+                //write ID
+                if (mId.find()) {
+                    bufferedWriter.write(mId.group().replaceAll("\t", ""));
+                }
+                bufferedWriter.write(", ");
+                
+                //write Titel
+                if (mTitel.find()) {
+                    bufferedWriter.write(mTitel.group().replaceAll("((/m/.*?\t)|(\t\\d))", ""));
+                }
+                bufferedWriter.write(", ");
+                
+                //write Date
+                if (mDate.find()) {
+                    bufferedWriter.write(mDate.group().replaceAll("\t", ""));
+                    //break;
+                }
+                bufferedWriter.write(", ");
+                
+                //write Length
+                if (mLength.find()) {
+                    bufferedWriter.write(mLength.group());
+                }
+                bufferedWriter.write(", ");
+                
+                //write Language
+                bufferedWriter.write("{");
+                while (mLanguage.find()) {
+                    bufferedWriter.write(mLanguage.group().replaceAll("(:|\"|Language)", ""));
+                    bufferedWriter.write(", ");
+                }
+                bufferedWriter.write("}, ");
+                
+                //write country
+                String country = "";
+                while (mCountry.find()) {
+                    country = country.concat(mCountry.group());
+                }
+                //restrip the language and {"/m/.. stuff at the beginning
+                //there's only left e.g. Germany}Drama,Comedy}
+                country = country.replaceAll("\\{\".*?: \"(\\w+) Language\"\\}","");
+                country = country.replaceAll("\\{\"/m/.*?\": \"","");
+                country = country.replaceAll("(\")|(/m/.*?:)","");
+                
+                //array for all Strings left after the stripping
+                //the country and genres are seperated
+                String countries[] = country.split("}");
+                //the array can also be used for the genre
+                String genre[] = countries;
+                
+                bufferedWriter.write("{ ");
+                //only write the country out of the array
+                bufferedWriter.write(countries[0]);
+                bufferedWriter.write(" }, ");
+                
+                //writing the genre
+                if (countries.length > 1) {
+                    bufferedWriter.write("{ ");
+                    //only write the genre out of the array
+                    bufferedWriter.write(genre[1]);
+                    bufferedWriter.write(" }\n");
+                }
+                else bufferedWriter.write("{}\n");
+            }
+            
+            //close the files
+            bufferedReader.close();
+            bufferedWriter.close();
+        }
+        catch(FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }		
+    }
+    
+    public static void main(String [] args) {
+        Import imp = new Import();
+        imp.importFile();
+    }
+}

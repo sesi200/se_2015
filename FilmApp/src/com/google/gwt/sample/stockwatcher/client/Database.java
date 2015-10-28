@@ -8,7 +8,7 @@ public class Database implements IImport, IExport {
 	private String file = new String(); //FileName location must be set!!
 	
 	//Create a test-film1 for testing Export function
-	public Film createFilm1(){
+	private Film createFilm1(){
 		ArrayList<String> language = new ArrayList<String>();
 		language.add("German");
 		language.add("English");
@@ -22,7 +22,7 @@ public class Database implements IImport, IExport {
 		return film1;
 	}
 	//Create a test-film2 for testing Export function
-	public Film createFilm2(){
+	private Film createFilm2(){
 		ArrayList<String> language = new ArrayList<String>();
 		language.add("Spanish");
 		language.add("English");
@@ -42,11 +42,11 @@ public class Database implements IImport, IExport {
 		
 		for(int i=0; i<50; i++){
 			storage_array.add(createFilm1());
-			storage_array.add(createFilm2());
-			storage_array.add(createFilm2());
+			storage_array.add(createFilm1());
+			storage_array.add(createFilm1());
 			storage_array.add(createFilm1());
 			storage_array.add(createFilm2());
-			storage_array.add(createFilm1());
+			storage_array.add(createFilm2());
 		}
 	
 		//importFile(file);
@@ -76,6 +76,10 @@ public class Database implements IImport, IExport {
 	
 	public Film getFilm(int i){
 		return storage_array.get(i);	
+	}
+	
+	public ArrayList<Film> getDatabase(){
+		return storage_array;	
 	}
 	
 	ArrayList<Film> getFilteredData(String filter){

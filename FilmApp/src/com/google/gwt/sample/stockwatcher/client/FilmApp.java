@@ -40,14 +40,12 @@ public class FilmApp implements EntryPoint {
 			    
 	    // Assemble Main panel.
 	    mainPanel.add(table.getFilmTable());
-	    mainPanel.add(table.getNextButtonPanel());
+	    mainPanel.add(table.getButtonPanel());
 	    
 		// Use RootPanel.get() to get the entire body element
 		RootPanel.get("Main").add(mainPanel);
 			    	
 	}
-	
-
 		
 		
 //		// Create a handler for the exportButton

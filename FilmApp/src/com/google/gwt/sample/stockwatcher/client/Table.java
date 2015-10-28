@@ -27,21 +27,20 @@ public class Table{
 
 	private FlexTable filmTable = new FlexTable();
 	private ArrayList<Film> films = new ArrayList<Film>();
-	private HorizontalPanel nextButtonPanel = new HorizontalPanel();
+	private HorizontalPanel ButtonPanel = new HorizontalPanel();
 	private Button nextButton = new Button("Next");
+	private Button backButton = new Button("Back");
 	private int nextCounter = 0;
 	private Database database = new Database();
+	private int datasize = database.getDatabase().size();
+	private static int n_film = 12;
 
 	public FlexTable getFilmTable(){
 		return filmTable;
 	}
 	
-	public HorizontalPanel getNextButtonPanel(){
-		return nextButtonPanel;
-	}
-	
-	public Button getNextButton(){
-		return nextButton;
+	public HorizontalPanel getButtonPanel(){
+		return ButtonPanel;
 	}
 	
 	public void createTable () {
@@ -55,26 +54,36 @@ public class Table{
 	    filmTable.setText(0, 5, "Country");
 
 	    //Add Button to panel
-	    nextButtonPanel.add(nextButton);
+	    ButtonPanel.add(backButton);
+	    ButtonPanel.add(nextButton);
 	    
 	    // Add styles to elements in the table and the next-button.
 	    filmTable.setCellPadding(6);
 	    filmTable.getRowFormatter().addStyleName(0, "tableHeader");
 	    filmTable.addStyleName("table");
-	    nextButtonPanel.addStyleName("buttonPanel");
+	    ButtonPanel.addStyleName("buttonPanel");
 	    
-		//Default fill table with 10 films
-		fillTable10(nextCounter);
-		nextCounter+=10;
+		//Default fill table with films
+		fillTableNum(nextCounter, n_film);
+		nextCounter += n_film;
 		
-	    // Listen for mouse events on the Add button.
+	    // Listen for mouse events on the next button.
+		// When button was clicked, show next n_film films
 	    nextButton.addClickHandler(new ClickHandler() {
 	      public void onClick(ClickEvent event) {
-	  		fillTable10(nextCounter);
-	  		nextCounter+=10;
+	    		nextCounter = fillTableNum(nextCounter, n_film);
 	      }
 	    });
-		
+	    
+	    // Listen for mouse events on the back button.
+	    // When button was clicked, show previous n_film films
+	    backButton.addClickHandler(new ClickHandler() {
+	      public void onClick(ClickEvent event) {
+	    	if(nextCounter-n_film<0){nextCounter=0;}
+	    	nextCounter = fillTableNum(nextCounter-2*n_film, n_film);    	
+	      }
+	    });	
+	  
 	}
 	
 	// Add a film to the table.
@@ -89,7 +98,7 @@ public class Table{
 		ArrayList<String> languages = new ArrayList<String>();
 		languages = film.getLanguage();
 		String languagesString = new String();
-		for(String v: languages){languagesString += v + " ";	}
+		for(String v: languages){languagesString += v + "/ ";	}
 		
 		//Genres
 		ArrayList<String> genres = new ArrayList<String>();
@@ -101,7 +110,7 @@ public class Table{
 		ArrayList<String> countries = new ArrayList<String>();
 		countries = film.getCountries();
 		String countriesString = new String();
-		for(String v: countries){countriesString += v + " ";	}
+		for(String v: countries){countriesString += v + ", ";	}
 		
 		//int row = filmTable.getRowCount();
 		films.add(film);
@@ -114,11 +123,19 @@ public class Table{
 	
 	}
 	
-	private void fillTable10(int position){		
-  		position--;
-		for(int i=1; i<10; i++){
-			fillTable(database.getFilm(position+i),i);	
-		}		
+	// Fill table with num films
+	private int fillTableNum(int position, int num){		
+		int new_num;
+		if(num>datasize){
+			new_num=datasize;
+		}
+		else 
+			new_num = num;
+			
+		for(int i=0; i<new_num; i++){
+			fillTable(database.getFilm(position+i),i+1);	
+		}
+		return position+num;
 	}
 
 }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Database implements IImport, IExport {
 
 	private ArrayList<Film> storage_array;
-	private String file = new String(); //FileName location must be set!!
 	
 	//Create a test-film1 for testing Export function
 	private Film createFilm1(){
@@ -39,16 +38,20 @@ public class Database implements IImport, IExport {
 	
 	public Database(){
 		storage_array = new ArrayList<Film>();
-		
-		for(int i=0; i<50; i++){
-			storage_array.add(createFilm1());
-			storage_array.add(createFilm1());
-			storage_array.add(createFilm1());
-			storage_array.add(createFilm1());
-			storage_array.add(createFilm2());
-			storage_array.add(createFilm2());
-		}
+		//importFile(file);
+	}
 	
+	public Database(int times){
+		storage_array = new ArrayList<Film>();
+		
+		for(int j=0; j<times; j++){
+			storage_array.add(createFilm1());
+			storage_array.add(createFilm1());
+			storage_array.add(createFilm1());
+			storage_array.add(createFilm1());
+			storage_array.add(createFilm2());
+			storage_array.add(createFilm2());
+		}	
 		//importFile(file);
 	}
 	

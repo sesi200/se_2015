@@ -1,26 +1,8 @@
 package com.google.gwt.sample.stockwatcher.client;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
-
-import java.util.Date;
-import java.util.ArrayList;
-
-import com.google.gwt.i18n.client.NumberFormat;
-import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.Random;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyDownEvent;
-import com.google.gwt.event.dom.client.KeyDownHandler;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -28,38 +10,18 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class FilmApp implements EntryPoint {
 	
-	private Table table = new Table();
 	private VerticalPanel mainPanel = new VerticalPanel();
+	private Table mainTable = new Table();
 	
-	/**
-	 * This is the entry point method.
-	 */
 	public void onModuleLoad() {
-		
-		table.createTable();
-			    
-	    // Assemble Main panel.
-	    mainPanel.add(table.getFilmTable());
-	    mainPanel.add(table.getButtonPanel());
-	    
-		// Use RootPanel.get() to get the entire body element
+	  
+		mainTable.createTable();
+
+		// Add the pager and list to the page.
+		mainPanel.add(mainTable.getCellTable());
+		mainPanel.add(mainTable.getPager());
 		RootPanel.get("Main").add(mainPanel);
-			    	
+   
 	}
-		
-		
-//		// Create a handler for the exportButton
-//		class MyHandler implements ClickHandler{
-//			/**
-//			 * Fired when the user clicks on the exportButton.
-//			 */
-//			public void onClick(ClickEvent event) {
-//				database.exportXML();
-//			}
-//		}
-//
-//		// Add a handler to send the name to the server
-//		MyHandler handler = new MyHandler();
-//		exportButton.addClickHandler(handler);
 }
 
